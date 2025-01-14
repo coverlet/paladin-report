@@ -28,10 +28,16 @@ try {
       if (match) {
         const timestampInNanoseconds = BigInt(Date.now()) * BigInt(1e6);
 
+        const currentDate = new Date();
+        currentDate.setHours(0, 0, 0, 0);
+        const dayOnlyTimeStamp = BigInt(currentDate.getTime()) * BigInt(1e6);
+
+        console.log(timestampInNanoseconds);
+
         const committedLamports = parseInt(match[1], 10);
         const sol = committedLamports / lamportsToSol;
 
-        const data = `solana_node,host=${host} paladinSol=${sol},date=${timestampInNanoseconds}`;
+        const data = `solana_node,host=${host} paladinSol=${sol},date=${timestampInNanoseconds},day=${dayOnlyTimeStamp}`;
         console.log(data);
         postData(data);
       }
